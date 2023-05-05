@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { ApiError } from "../../../shared/errors/api.error";
 import { Typeruser } from "../../../models/user.model";
+import { ApiError } from "../../../shared/errors/api.error";
 
-export const checkLoginRecruiterValidator = (
+export const checkLoginCandidatoValidator = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -17,9 +17,9 @@ export const checkLoginRecruiterValidator = (
       });
     }
 
-    const decodeUser = JSON.parse(user);
+    const decodedUser = JSON.parse(user);
 
-    if (decodeUser.type !== Typeruser.Recruiter) {
+    if (decodedUser.tipo !== Typeruser.Candidate) {
       return res.status(403).send({
         ok: false,
         message: "Usuário não possui permissão",

@@ -5,7 +5,7 @@ import { UserRepository } from "../../user/database/user.repository";
 interface CreateRecruiterParams {
   name: string;
   username: string;
-  passowrd: string;
+  password: string;
   nameCompany: string;
 }
 
@@ -26,7 +26,7 @@ export class CreateRecruiterUsecase {
     const recruiter = new Recruiter(
       data.name,
       data.username,
-      data.passowrd,
+      data.password,
       data.nameCompany
     );
 

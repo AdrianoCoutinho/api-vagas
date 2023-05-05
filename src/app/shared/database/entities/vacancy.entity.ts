@@ -47,7 +47,7 @@ export class VacancyEntity {
   @JoinColumn({
     name: "id_recruiter",
   })
-  recrutador: UserEntity;
+  recruiter: UserEntity;
 
   @CreateDateColumn({
     name: "dthr_register",

@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import { recruiterRoutes } from "../../app/features/recruiter/routes/recruiter.routes";
+import { candidateRoutes } from "../../app/features/candidate/routes/candidate.routes";
 
 export const createApp = () => {
   const app = express();
@@ -8,6 +9,7 @@ export const createApp = () => {
   app.use(cors());
 
   app.use("/recruiter", recruiterRoutes());
+  app.use("/candidate", candidateRoutes());
 
   return app;
 };
