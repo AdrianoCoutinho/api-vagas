@@ -1,31 +1,30 @@
 import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../../../shared/errors/api.error";
-import { Typeruser } from "../../../models/user.model";
+import { Typeuser } from "../../../models/user.model";
 
-export const checkLoginRecruiterValidator = (
+export const checkRecruiterValidator = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const user = req.headers["user"] as string;
+    const usuario = req.headers["user"] as string;
 
-    if (!user) {
+    if (!usuario) {
       return res.status(401).send({
         ok: false,
-        message: "Usuário não está logado",
+        message: "Usuario não logado",
       });
     }
 
-    const decodeUser = JSON.parse(user);
+    const decodedUsuario = JSON.parse(usuario);
 
-    if (decodeUser.type !== Typeruser.Recruiter) {
+    if (decodedUsuario.Typeuser !== Typeuser.Recruiter) {
       return res.status(403).send({
         ok: false,
-        message: "Usuário não possui permissão",
+        message: "Usuario não possui permissão",
       });
     }
-
     return next();
   } catch (error: any) {
     return ApiError.serverError(res, error);

@@ -4,10 +4,18 @@ import { ApplicationUsecase } from "../usecases/application.usecase";
 import { ListCandidaciesUsecase } from "../usecases/list-candidacies.usecase";
 import { ListAllCandidaciesUsecase } from "../usecases/list-all-candidacies.usecase";
 
-export class CandidaturaController {
+export class CandidacyController {
   public async create(req: Request, res: Response) {
     try {
       const { idVaga } = req.body;
+
+      if (!idVaga) {
+        return {
+          ok: false,
+          code: 404,
+          message: "idVaga não foi passado!",
+        };
+      }
 
       const candidato = req.headers["user"] as string;
       const candidatoDecoded = JSON.parse(candidato);

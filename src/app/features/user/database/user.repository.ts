@@ -1,5 +1,5 @@
 import { TypeormConnection } from "../../../../main/database/typeorm.connection";
-import { Typeruser, User } from "../../../models/user.model";
+import { Typeuser, User } from "../../../models/user.model";
 import { UserEntity } from "../../../shared/database/entities/user.entity";
 
 export class UserRepository {
@@ -47,10 +47,12 @@ export class UserRepository {
     return UserRepository.mapEntityToModel(result);
   }
 
-  public async list(type?: Typeruser) {
+  public async list(type?: Typeuser) {
     const result = await this.repository.findBy({
       type,
     });
+
+    return result.map((item) => UserRepository.mapEntityToModel(item));
   }
 
   public static mapEntityToModel(entity: UserEntity): User {

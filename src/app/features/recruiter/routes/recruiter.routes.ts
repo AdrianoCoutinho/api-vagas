@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { checkLoginRecruiterValidator } from "../validators/check-login-recruiter.validator";
-import { CheckLoginValidator } from "../../login/validators/check-login.validator";
+import { checkRecruiterValidator } from "../validators/check-recruiter.validator";
+import { checkLoginValidator } from "../../login/validators/check-login.validator";
 import { RecruiterController } from "../controllers/recruiter.controller";
 import { CreateRecruiterValidator } from "../validators/create-recruiter.validator";
 
@@ -9,7 +9,7 @@ export const recruiterRoutes = () => {
 
   router.get(
     "/",
-    [CheckLoginValidator, checkLoginRecruiterValidator],
+    [checkLoginValidator, checkRecruiterValidator],
     new RecruiterController().list
   );
 

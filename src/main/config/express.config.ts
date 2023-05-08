@@ -2,6 +2,9 @@ import cors from "cors";
 import express from "express";
 import { recruiterRoutes } from "../../app/features/recruiter/routes/recruiter.routes";
 import { candidateRoutes } from "../../app/features/candidate/routes/candidate.routes";
+import { loginRoutes } from "../../app/features/login/routes/login.routes";
+import { vacancyRoutes } from "../../app/features/vacancy/routes/vacancy.routes";
+import { candidacyRoutes } from "../../app/features/candidacy/routes/candidacy.routes";
 
 export const createApp = () => {
   const app = express();
@@ -9,7 +12,14 @@ export const createApp = () => {
   app.use(cors());
 
   app.use("/recruiter", recruiterRoutes());
+
+  app.use("/auth", loginRoutes());
+
   app.use("/candidate", candidateRoutes());
+
+  app.use("/vacancy", vacancyRoutes());
+
+  app.use("/candidacy", candidacyRoutes());
 
   return app;
 };

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../../../shared/errors/api.error";
 import { RequestError } from "../../../shared/errors/request.error";
 import { UserRepository } from "../../user/database/user.repository";
+import { Typeuser } from "../../../models/user.model";
 
 export class CreateRecruiterValidator {
   public static async validate(
@@ -13,31 +14,31 @@ export class CreateRecruiterValidator {
       const { name, username, password, nameCompany } = req.body;
 
       if (!name) {
-        RequestError.fieldNotProvided(res, "Name");
+        return RequestError.fieldNotProvided(res, "Name");
       }
 
       if (!username) {
-        RequestError.fieldNotProvided(res, "Username");
+        return RequestError.fieldNotProvided(res, "Username");
       }
 
       if (!password) {
-        RequestError.fieldNotProvided(res, "Password");
+        return RequestError.fieldNotProvided(res, "Password");
       }
 
       if (!nameCompany) {
-        RequestError.fieldNotProvided(res, "Company name");
+        return RequestError.fieldNotProvided(res, "nameCompany");
       }
 
       const repository = new UserRepository();
-      const usuario = await repository.create(username);
+      const usuario = await repository.getByUsername(username);
 
       if (usuario !== null) {
-        RequestError.invalidData(res, "Username já existe!");
+        return RequestError.invalidData(res, "Username já existe!");
       }
 
       next();
     } catch (error: any) {
-      ApiError.serverError(res, error);
+      return ApiError.serverError(res, error);
     }
   }
 }

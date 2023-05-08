@@ -1,4 +1,4 @@
-import { Typeruser } from "../../../models/user.model";
+import { Typeuser } from "../../../models/user.model";
 import { CacheRepository } from "../../../shared/database/repositories/cache.repository";
 import { Return } from "../../../shared/util/return.contract";
 import { UserRepository } from "../../user/database/user.repository";
@@ -19,7 +19,7 @@ export class ListCandidateUsecase {
 
     const repository = new UserRepository();
 
-    const listCandidates = await repository.list(Typeruser.Candidate);
+    const listCandidates = await repository.list(Typeuser.Candidate);
 
     const result = await cacheRepository.set(`listaCandidatos`, listCandidates);
 

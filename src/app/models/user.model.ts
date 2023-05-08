@@ -1,6 +1,6 @@
 import { v4 as createUuid } from "uuid";
 
-export enum Typeruser {
+export enum Typeuser {
   Admin = "A",
   Candidate = "C",
   Recruiter = "R",
@@ -13,7 +13,7 @@ export class User {
     public name: string,
     public username: string,
     public password: string,
-    public typeUser: Typeruser,
+    public typeUser: Typeuser,
     public nameCompany?: string
   ) {
     this._id = createUuid();
@@ -24,7 +24,7 @@ export class User {
     name: string,
     username: string,
     password: string,
-    typeUser: Typeruser,
+    typeUser: Typeuser,
     nameCompany: string
   ) {
     const user = new User(name, username, password, typeUser, nameCompany);
@@ -41,7 +41,7 @@ export class User {
       _id: this._id,
       name: this.name,
       username: this.username,
-      typeruser: this.typeUser,
+      Typeuser: this.typeUser,
     };
   }
 }

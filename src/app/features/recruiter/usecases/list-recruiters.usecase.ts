@@ -1,11 +1,11 @@
-import { Typeruser } from "../../../models/user.model";
+import { Typeuser } from "../../../models/user.model";
 import { Return } from "../../../shared/util/return.contract";
 import { UserRepository } from "../../user/database/user.repository";
 
 export class ListRecruitersUsecase {
   public async execute(): Promise<Return> {
     const repository = new UserRepository();
-    const result = await repository.list(Typeruser.Recruiter);
+    const result = await repository.list(Typeuser.Recruiter);
 
     return {
       ok: true,

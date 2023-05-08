@@ -12,19 +12,19 @@ export class CreateCandidateValidator {
       const { name, username, password } = req.body;
 
       if (!name) {
-        RequestError.fieldNotProvided(res, "Name");
+        return RequestError.fieldNotProvided(res, "Name");
       }
 
       if (!username) {
-        RequestError.fieldNotProvided(res, "Username");
+        return RequestError.fieldNotProvided(res, "Username");
       }
 
       if (!password) {
-        RequestError.fieldNotProvided(res, "Password");
+        return RequestError.fieldNotProvided(res, "Password");
       }
       next();
     } catch (error: any) {
-      ApiError.serverError(res, error);
+      return ApiError.serverError(res, error);
     }
   }
 }

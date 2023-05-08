@@ -30,6 +30,8 @@ export class VacancyRepository {
   }
 
   public async get(id: string) {
+    console.log(id);
+
     const result = await this.repository.findOne({
       where: {
         id,

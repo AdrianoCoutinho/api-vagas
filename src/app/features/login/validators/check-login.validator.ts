@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../../../shared/errors/api.error";
 import { JwtAdapter } from "../../../shared/util/jwt.adapter";
 
-export const CheckLoginValidator = (
+export const checkLoginValidator = (
   req: Request,
   res: Response,
   next: NextFunction

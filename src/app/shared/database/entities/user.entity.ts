@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
-import { Typeruser } from "../../../models/user.model";
+import { Typeuser } from "../../../models/user.model";
 
 @Entity("user")
 export class UserEntity {
@@ -15,7 +15,7 @@ export class UserEntity {
   username: string;
 
   @Column({
-    select: false,
+    select: true,
   })
   password: string;
 
@@ -24,7 +24,7 @@ export class UserEntity {
     length: 1,
     enum: ["A", "R", "C"],
   })
-  type: Typeruser;
+  type: Typeuser;
 
   @Column({
     nullable: true,

@@ -1,4 +1,4 @@
-import { Typeruser, User } from "./user.model";
+import { Typeuser, User } from "./user.model";
 
 export class Recruiter extends User {
   constructor(
@@ -7,6 +7,6 @@ export class Recruiter extends User {
     password: string,
     nameCompany: string
   ) {
-    super(name, username, password, Typeruser.Recruiter, nameCompany);
+    super(name, username, password, Typeuser.Recruiter, nameCompany);
   }
 }
