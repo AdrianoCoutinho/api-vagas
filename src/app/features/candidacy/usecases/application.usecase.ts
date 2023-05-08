@@ -26,46 +26,44 @@ export class ApplicationUsecase {
     const vagasRepository = new VacancyRepository();
     const vaga = await vagasRepository.get(data.idVaga);
 
-    // if (!vaga) {
-    //   return {
-    //     ok: false,
-    //     code: 404,
-    //     message: "Vaga não encontrada",
-    //   };
-    // }
-    // const result = ApplicationValidator.validateVacancy(vaga);
-    // if (!result.ok) {
-    //   return result;
-    // }
+    if (!vaga) {
+      return {
+        ok: false,
+        code: 404,
+        message: "Vaga não encontrada",
+      };
+    }
+    const result = ApplicationValidator.validateVacancy(vaga);
+    if (!result.ok) {
+      return result;
+    }
 
-    // const repository = new CandidacyRepository();
+    const repository = new CandidacyRepository();
 
-    // const candidates = await repository.listByVaga({ idVaga: vaga.id });
+    const candidates = await repository.listByVaga({ idVaga: vaga.id });
 
-    // if (vaga.maxCandidates) {
-    //   if (candidates.length >= vaga.maxCandidates) {
-    //     return {
-    //       ok: false,
-    //       code: 400,
-    //       message: "Já alcançou o limite de candidaturas.",
-    //     };
-    //   }
-    // }
+    if (vaga.maxCandidates) {
+      if (candidates.length >= vaga.maxCandidates) {
+        return {
+          ok: false,
+          code: 400,
+          message: "Já alcançou o limite de candidaturas.",
+        };
+      }
+    }
 
-    // if (ApplicationValidator.doubleCandidacy(candidates, data.idCandidato)) {
-    //   return {
-    //     ok: false,
-    //     code: 400,
-    //     message: "Você já se candidatou à esta vaga.",
-    //   };
-    // }
+    if (ApplicationValidator.doubleCandidacy(candidates, data.idCandidato)) {
+      return {
+        ok: false,
+        code: 400,
+        message: "Você já se candidatou à esta vaga.",
+      };
+    }
 
-    // const newCandidatura = new Candidacy(new Date(), false, candidato, vaga);
-
-    // await repository.create(newCandidatura);
-
-    // await new CacheRepository().delete(`listaCandidatura:${data.idCandidato}`);
-    // await new CacheRepository().delete(`listaCandidaturas`);
+    const newCandidatura = new Candidacy(new Date(), false, candidato, vaga);
+    await repository.create(newCandidatura);
+    await new CacheRepository().delete(`listaCandidatura:${data.idCandidato}`);
+    await new CacheRepository().delete(`listaCandidaturas`);
 
     return {
       ok: true,

@@ -9,14 +9,6 @@ export class CandidacyController {
     try {
       const { idVaga } = req.body;
 
-      if (!idVaga) {
-        return {
-          ok: false,
-          code: 404,
-          message: "idVaga não foi passado!",
-        };
-      }
-
       const candidato = req.headers["user"] as string;
       const candidatoDecoded = JSON.parse(candidato);
 
@@ -27,7 +19,7 @@ export class CandidacyController {
 
       return res.status(result.code).send(result);
     } catch (error: any) {
-      ApiError.serverError(res, error);
+      return ApiError.serverError(res, error);
     }
   }
 
