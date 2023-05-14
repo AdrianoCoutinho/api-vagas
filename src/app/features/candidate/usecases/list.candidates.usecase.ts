@@ -21,7 +21,7 @@ export class ListCandidateUsecase {
 
     const listCandidates = await repository.list(Typeuser.Candidate);
 
-    const result = await cacheRepository.set(`listaCandidatos`, listCandidates);
+    const result = await cacheRepository.set(`listCandidates`, listCandidates);
 
     return {
       ok: true,

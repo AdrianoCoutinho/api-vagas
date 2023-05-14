@@ -23,7 +23,7 @@ export class ListCandidaciesUsecase {
     const listaCandidaturas = await repository.getById(idCandidate);
 
     await cacheRepository.set(
-      `listaCandidatura:${idCandidate}`,
+      `listCandidature:${idCandidate}`,
       listaCandidaturas
     );
 

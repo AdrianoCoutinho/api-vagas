@@ -18,7 +18,7 @@ export const candidacyRoutes = () => {
     new CandidacyController().listCandidaturas
   );
 
-  router.get("/listagem", new CandidacyController().listAllCandidaturas);
+  router.get("/listall", new CandidacyController().listAllCandidaturas);
 
   return router;
 };

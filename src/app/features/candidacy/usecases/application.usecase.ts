@@ -33,7 +33,9 @@ export class ApplicationUsecase {
         message: "Vaga não encontrada",
       };
     }
+
     const result = ApplicationValidator.validateVacancy(vaga);
+
     if (!result.ok) {
       return result;
     }
@@ -61,9 +63,11 @@ export class ApplicationUsecase {
     }
 
     const newCandidatura = new Candidacy(new Date(), false, candidato, vaga);
+
     await repository.create(newCandidatura);
-    await new CacheRepository().delete(`listaCandidatura:${data.idCandidato}`);
-    await new CacheRepository().delete(`listaCandidaturas`);
+
+    await new CacheRepository().delete(`listCandidature:${data.idCandidato}`);
+    await new CacheRepository().delete(`listCandidatures`);
 
     return {
       ok: true,

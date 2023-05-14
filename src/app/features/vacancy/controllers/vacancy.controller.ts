@@ -16,12 +16,64 @@ export class VacancyController {
     }
   }
 
+  public async listAllVacanciesByRecruiter(req: Request, res: Response) {
+    try {
+      const usecase = new ListVacanciesUsecase();
+      const result = await usecase.execute();
+
+      const usuario = req.headers["user"] as string;
+
+      const decodedUsuario = JSON.parse(usuario);
+
+      const filtredResult = result.data.filter(
+        (item: any) => item.recruiter.username === decodedUsuario.username
+      );
+
+      return res.status(result.code).send(filtredResult);
+    } catch (error: any) {
+      return ApiError.serverError(res, error);
+    }
+  }
+
+  public async getVagaByRecruiter(req: Request, res: Response) {
+    try {
+      const { idVaga } = req.params;
+      const usecase = new ListVacancyUsecase();
+      const result = await usecase.execute(idVaga);
+
+      const usuario = req.headers["user"] as string;
+
+      const decodedUsuario = JSON.parse(usuario);
+
+      if (decodedUsuario.username !== result.data.recruiter.username) {
+        return res.status(403).send({
+          ok: false,
+          message: "Usuario não possui permissão",
+        });
+      }
+
+      return res.status(result.code).send(result);
+    } catch (error: any) {
+      return ApiError.serverError(res, error);
+    }
+  }
+
   public async getVaga(req: Request, res: Response) {
     try {
       const { idVaga } = req.params;
-      console.log(idVaga);
       const usecase = new ListVacancyUsecase();
       const result = await usecase.execute(idVaga);
+
+      const usuario = req.headers["user"] as string;
+
+      const decodedUsuario = JSON.parse(usuario);
+
+      if (decodedUsuario.username !== result.data.recruiter.username) {
+        return res.status(403).send({
+          ok: false,
+          message: "Usuario não possui permissão",
+        });
+      }
 
       return res.status(result.code).send(result);
     } catch (error: any) {
@@ -44,7 +96,7 @@ export class VacancyController {
         dtLimit,
         indActive,
         maxCandidates,
-        idRecruiter: usuarioDecoded.id,
+        idRecruiter: usuarioDecoded._id,
       });
 
       return res.status(result.code).send(result);

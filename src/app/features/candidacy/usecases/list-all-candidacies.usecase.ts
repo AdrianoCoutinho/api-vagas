@@ -6,7 +6,7 @@ export class ListAllCandidaciesUsecase {
   public async execute(): Promise<Return> {
     const cacheRepository = new CacheRepository();
 
-    const cacheResult = await cacheRepository.get("listaCandidaturas");
+    const cacheResult = await cacheRepository.get("listCandidacies");
 
     if (cacheResult) {
       return {
@@ -22,7 +22,7 @@ export class ListAllCandidaciesUsecase {
     const listCandidacies = await candidaturaRepository.listAll();
 
     const result = await cacheRepository.set(
-      `listaCandidaturas`,
+      `listCandidatures`,
       listCandidacies
     );
 

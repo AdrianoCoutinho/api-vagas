@@ -26,7 +26,7 @@ export class CreateCandidateUsecase {
 
     const result = await repository.create(candidate);
 
-    await new CacheRepository().delete(`listaCandidatos`);
+    await new CacheRepository().delete(`listCandidates`);
 
     return {
       ok: true,

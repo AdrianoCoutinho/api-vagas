@@ -18,7 +18,7 @@ export class CandidacyRepository {
         idVacancy: params.idVaga,
         idCandidate: params.idCandidato,
       },
-      relations: ["candidacy", "vacancy", "vacancy.recruiter"],
+      relations: ["candidate", "vacancy", "vacancy.recruiter"],
     });
 
     return result.map((item) => this.mapEntityToModel(item));
@@ -26,7 +26,7 @@ export class CandidacyRepository {
 
   public async listAll() {
     const result = await this.repository.find({
-      relations: ["candidacy", "vacancy", "vacancy.recruiter"],
+      relations: ["candidate", "vacancy", "vacancy.recruiter"],
     });
 
     return result.map((item) => this.mapEntityToModel(item));
@@ -39,7 +39,7 @@ export class CandidacyRepository {
       },
       relations: {
         candidate: true,
-        vacancy: { recrutador: true },
+        vacancy: { recruiter: true },
       },
     });
 

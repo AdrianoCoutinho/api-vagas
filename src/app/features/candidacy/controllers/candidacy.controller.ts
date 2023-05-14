@@ -3,13 +3,19 @@ import { ApiError } from "../../../shared/errors/api.error";
 import { ApplicationUsecase } from "../usecases/application.usecase";
 import { ListCandidaciesUsecase } from "../usecases/list-candidacies.usecase";
 import { ListAllCandidaciesUsecase } from "../usecases/list-all-candidacies.usecase";
+import { RequestError } from "../../../shared/errors/request.error";
 
 export class CandidacyController {
   public async create(req: Request, res: Response) {
     try {
       const { idVaga } = req.body;
 
+      if (!idVaga) {
+        return RequestError.fieldNotProvided(res, "idVaga");
+      }
+
       const candidato = req.headers["user"] as string;
+
       const candidatoDecoded = JSON.parse(candidato);
 
       const result = await new ApplicationUsecase().execute({
