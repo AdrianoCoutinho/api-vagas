@@ -24,7 +24,7 @@ export class CreateVacancyValidator {
             message: "formato de data invalido, utlize ano-mes-dia!",
           });
         }
-        let date = new Date(dtLimit.split("-").reverse().join("-"));
+        let date = new Date(dtLimit.split("-").join("-"));
         const novaData = new Date();
         if (date <= novaData) {
           return res.status(400).send({

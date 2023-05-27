@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { ApiError } from "../../../shared/errors/api.error";
-import { Typeuser } from "../../../models/user.model";
+import { ApiError } from "../errors/api.error";
+import { Typeuser } from "../../models/user.model";
 
 export const checkRecruiterValidator = (
   req: Request,

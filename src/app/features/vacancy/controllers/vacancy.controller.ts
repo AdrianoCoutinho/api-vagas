@@ -4,6 +4,7 @@ import { ListVacanciesUsecase } from "../usecases/list-vacancies.usecase";
 import { CreateVacancyUsecase } from "../usecases/create-vacancy.usecase";
 import { ListVacancyUsecase } from "../usecases/list-vacancy.usecase";
 import { UpdateStatusVacancyUsecase } from "../usecases/update-status-vacancy.usecase";
+import { DeleteVacancyUsecase } from "../usecases/delete-vacancy.usecase";
 
 export class VacancyController {
   public async listAllVagas(req: Request, res: Response) {
@@ -36,7 +37,7 @@ export class VacancyController {
     }
   }
 
-  public async getVagaByRecruiter(req: Request, res: Response) {
+  public async getVacancyByRecruiter(req: Request, res: Response) {
     try {
       const { idVaga } = req.params;
       const usecase = new ListVacancyUsecase();
@@ -59,7 +60,7 @@ export class VacancyController {
     }
   }
 
-  public async getVaga(req: Request, res: Response) {
+  public async getVacancy(req: Request, res: Response) {
     try {
       const { idVaga } = req.params;
       const usecase = new ListVacancyUsecase();
@@ -86,6 +87,19 @@ export class VacancyController {
     try {
       const { idVacancy } = req.params;
       const usecase = new UpdateStatusVacancyUsecase();
+
+      const result = await usecase.execute(idVacancy);
+
+      return res.status(result.code).send(result);
+    } catch (error: any) {
+      return ApiError.serverError(res, error);
+    }
+  }
+
+  public async deleteVacancy(req: Request, res: Response) {
+    try {
+      const { idVacancy } = req.params;
+      const usecase = new DeleteVacancyUsecase();
 
       const result = await usecase.execute(idVacancy);
 

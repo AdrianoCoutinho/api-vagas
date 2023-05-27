@@ -3,17 +3,28 @@ import { CacheRepository } from "../../../shared/database/repositories/cache.rep
 import { Return } from "../../../shared/util/return.contract";
 import { VacancyRepository } from "../database/vacancy.repository";
 
-export class UpdateStatusVacancyUsecase {
+export class DeleteVacancyUsecase {
   public async execute(idVacancy: string): Promise<Return> {
     const repository = new VacancyRepository();
 
-    const listVacancy = await repository.changeStatus(idVacancy);
+    const vacancyExists = await repository.get(idVacancy);
+
+    if (!vacancyExists) {
+      return {
+        ok: false,
+        code: 404,
+        message: "Vaga não encontrada",
+        data: null,
+      };
+    }
+
+    const listVacancy = await repository.deleteVacancy(idVacancy);
 
     return {
       ok: true,
       code: 200,
-      message: "Status da vaga mudado com sucesso!",
-      data: `Status - ${listVacancy}`,
+      message: "Vaga deletada com sucesso!",
+      data: listVacancy,
     };
   }
 }

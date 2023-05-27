@@ -79,7 +79,7 @@ export class VacancyRepository {
 
       await this.repository.save(vacancy);
 
-      return vacancy;
+      return vacancy.indActive;
     }
 
     if (vacancy.indActive.toString() === "true") {
@@ -90,6 +90,26 @@ export class VacancyRepository {
     await new CacheRepository().delete(`listVacancies:${vacancy.id}`);
 
     await this.repository.save(vacancy);
+
+    return vacancy.indActive;
+  }
+
+  public async deleteVacancy(id: string) {
+    const vacancy = await this.repository.findOne({
+      where: {
+        id,
+      },
+      relations: ["recruiter"],
+    });
+
+    if (vacancy === null) {
+      return null;
+    }
+
+    await new CacheRepository().delete(`listVacancies`);
+    await new CacheRepository().delete(`listVacancies:${vacancy.id}`);
+
+    await this.repository.remove(vacancy);
 
     return vacancy;
   }
