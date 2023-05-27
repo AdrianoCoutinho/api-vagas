@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { ApiError } from "../../../shared/errors/api.error";
-import { JwtAdapter } from "../../../shared/util/jwt.adapter";
+import { ApiError } from "../errors/api.error";
+import { JwtAdapter } from "../util/jwt.adapter";
 
 export const checkLoginValidator = (
   req: Request,

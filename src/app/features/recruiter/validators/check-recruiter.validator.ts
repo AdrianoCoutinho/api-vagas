@@ -18,7 +18,6 @@ export const checkRecruiterValidator = (
     }
 
     const decodedUsuario = JSON.parse(usuario);
-
     if (decodedUsuario.Typeuser !== Typeuser.Recruiter) {
       return res.status(403).send({
         ok: false,

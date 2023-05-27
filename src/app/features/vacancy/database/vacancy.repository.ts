@@ -1,6 +1,7 @@
 import { TypeormConnection } from "../../../../main/database/typeorm.connection";
 import { Vacancy } from "../../../models/vacancy.model";
 import { VacancyEntity } from "../../../shared/database/entities/vacancy.entity";
+import { CacheRepository } from "../../../shared/database/repositories/cache.repository";
 import { UserRepository } from "../../user/database/user.repository";
 
 export class VacancyRepository {
@@ -42,6 +43,55 @@ export class VacancyRepository {
     }
 
     return VacancyRepository.mapEntityToModel(result);
+  }
+
+  public async changeStatus(id: string) {
+    const vacancy = await this.repository.findOne({
+      where: {
+        id,
+      },
+      relations: ["recruiter"],
+    });
+
+    if (vacancy === null) {
+      return {
+        ok: false,
+        code: 404,
+        message: "Vaga não encontrada",
+        data: null,
+      };
+    }
+
+    if (vacancy.dtLimit < new Date()) {
+      return {
+        ok: false,
+        code: 400,
+        message:
+          "Você não pode ativar uma vaga com limite de inscrição excedido",
+        data: null,
+      };
+    }
+
+    if (vacancy.indActive.toString() === "false") {
+      vacancy.indActive = true;
+      await new CacheRepository().delete(`listVacancies`);
+      await new CacheRepository().delete(`listVacancies:${vacancy.id}`);
+
+      await this.repository.save(vacancy);
+
+      return vacancy;
+    }
+
+    if (vacancy.indActive.toString() === "true") {
+      vacancy.indActive = false;
+    }
+
+    await new CacheRepository().delete(`listVacancies`);
+    await new CacheRepository().delete(`listVacancies:${vacancy.id}`);
+
+    await this.repository.save(vacancy);
+
+    return vacancy;
   }
 
   public static mapEntityToModel(entity: VacancyEntity): Vacancy {

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { CandidacyController } from "../controllers/candidacy.controller";
-import { checkLoginValidator } from "../../login/validators/check-login.validator";
+import { checkLoginValidator } from "../../../shared/validators/check-login.validator";
 import { checkLoginCandidateValidator } from "../../candidate/validators/check-login-candidate.validator";
 
 export const candidacyRoutes = () => {

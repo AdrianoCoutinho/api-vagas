@@ -3,6 +3,7 @@ import { ApiError } from "../../../shared/errors/api.error";
 import { ListVacanciesUsecase } from "../usecases/list-vacancies.usecase";
 import { CreateVacancyUsecase } from "../usecases/create-vacancy.usecase";
 import { ListVacancyUsecase } from "../usecases/list-vacancy.usecase";
+import { UpdateStatusVacancyUsecase } from "../usecases/update-status-vacancy.usecase";
 
 export class VacancyController {
   public async listAllVagas(req: Request, res: Response) {
@@ -74,6 +75,19 @@ export class VacancyController {
           message: "Usuario não possui permissão",
         });
       }
+
+      return res.status(result.code).send(result);
+    } catch (error: any) {
+      return ApiError.serverError(res, error);
+    }
+  }
+
+  public async changeStatus(req: Request, res: Response) {
+    try {
+      const { idVacancy } = req.params;
+      const usecase = new UpdateStatusVacancyUsecase();
+
+      const result = await usecase.execute(idVacancy);
 
       return res.status(result.code).send(result);
     } catch (error: any) {
