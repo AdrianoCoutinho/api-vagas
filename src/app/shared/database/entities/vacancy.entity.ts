@@ -43,7 +43,7 @@ export class VacancyEntity {
   })
   idRecruiter: string;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity, { cascade: true })
   @JoinColumn({
     name: "id_recruiter",
   })

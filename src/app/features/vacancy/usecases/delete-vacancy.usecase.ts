@@ -7,9 +7,9 @@ export class DeleteVacancyUsecase {
   public async execute(idVacancy: string): Promise<Return> {
     const repository = new VacancyRepository();
 
-    const vacancyExists = await repository.get(idVacancy);
+    const listVacancy = await repository.deleteVacancy(idVacancy);
 
-    if (!vacancyExists) {
+    if (listVacancy === null) {
       return {
         ok: false,
         code: 404,
@@ -17,8 +17,6 @@ export class DeleteVacancyUsecase {
         data: null,
       };
     }
-
-    const listVacancy = await repository.deleteVacancy(idVacancy);
 
     return {
       ok: true,
