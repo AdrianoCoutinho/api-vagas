@@ -3,6 +3,7 @@ import { ApiError } from "../../../shared/errors/api.error";
 import { RequestError } from "../../../shared/errors/request.error";
 import { UserRepository } from "../../user/database/user.repository";
 import { Typeuser } from "../../../models/user.model";
+import { adminEnv } from "../../../envs/admin.env";
 
 export class CreateAdminValidator {
   public static async validate(
@@ -12,6 +13,12 @@ export class CreateAdminValidator {
   ) {
     try {
       const { name, username, password } = req.body;
+
+      const secretAdmin = req.headers["authorization"];
+
+      if (secretAdmin != adminEnv.secret) {
+        return RequestError.genericError(res, 401, "Você não tem autorização!");
+      }
 
       if (!name) {
         return RequestError.fieldNotProvided(res, "Name");

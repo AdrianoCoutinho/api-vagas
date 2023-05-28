@@ -19,4 +19,11 @@ export class RequestError {
       msg,
     });
   }
+
+  public static genericError(res: Response, code: number, msg: string) {
+    return res.status(code).send({
+      ok: false,
+      msg,
+    });
+  }
 }
