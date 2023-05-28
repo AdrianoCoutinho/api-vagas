@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ApiError } from "../../../shared/errors/api.error";
-import { ApplicationUsecase } from "../usecases/application.usecase";
+import { CreateUsecase } from "../usecases/create-candicy.usecase";
 import { ListCandidaciesUsecase } from "../usecases/list-candidacies.usecase";
 import { ListAllCandidaciesUsecase } from "../usecases/list-all-candidacies.usecase";
 import { RequestError } from "../../../shared/errors/request.error";
@@ -18,7 +18,7 @@ export class CandidacyController {
 
       const candidatoDecoded = JSON.parse(candidato);
 
-      const result = await new ApplicationUsecase().execute({
+      const result = await new CreateUsecase().execute({
         idVaga,
         idCandidato: candidatoDecoded._id,
       });

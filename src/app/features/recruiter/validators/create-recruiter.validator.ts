@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../../../shared/errors/api.error";
 import { RequestError } from "../../../shared/errors/request.error";
 import { UserRepository } from "../../user/database/user.repository";
-import { Typeuser } from "../../../models/user.model";
 
 export class CreateRecruiterValidator {
   public static async validate(

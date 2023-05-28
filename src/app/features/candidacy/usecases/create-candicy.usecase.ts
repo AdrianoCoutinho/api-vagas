@@ -10,7 +10,7 @@ interface ApplicationParams {
   idVaga: string;
 }
 
-export class ApplicationUsecase {
+export class CreateUsecase {
   public async execute(data: ApplicationParams): Promise<Return> {
     const usuarioRepository = new UserRepository();
     const candidato = await usuarioRepository.get(data.idCandidato);

@@ -5,11 +5,14 @@ import { candidateRoutes } from "../../app/features/candidate/routes/candidate.r
 import { loginRoutes } from "../../app/features/login/routes/login.routes";
 import { vacancyRoutes } from "../../app/features/vacancy/routes/vacancy.routes";
 import { candidacyRoutes } from "../../app/features/candidacy/routes/candidacy.routes";
+import { adminRoutes } from "../../app/features/admin/routes/admin.routes";
 
 export const createApp = () => {
   const app = express();
   app.use(express.json());
   app.use(cors());
+
+  app.use("/admin", adminRoutes());
 
   app.use("/recruiter", recruiterRoutes());
 
