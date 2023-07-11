@@ -4,13 +4,18 @@ import { checkLoginValidator } from "../../../shared/validators/check-login.vali
 import { RecruiterController } from "../controllers/recruiter.controller";
 import { CreateRecruiterValidator } from "../validators/create-recruiter.validator";
 import { VacancyController } from "../../vacancy/controllers/vacancy.controller";
+import { checkAdminValidator } from "../../../shared/validators/check-admin-validator";
 
 export const recruiterRoutes = () => {
   const router = Router();
 
   router.post(
     "/",
-    [CreateRecruiterValidator.validate],
+    [
+      checkLoginValidator,
+      checkAdminValidator,
+      CreateRecruiterValidator.validate,
+    ],
     new RecruiterController().create
   );
 
